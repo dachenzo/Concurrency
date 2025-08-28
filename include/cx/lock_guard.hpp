@@ -13,11 +13,11 @@ namespace Cx {
     template<BasicLockable Mutex>
     struct LockGuard {
 
-        LockGuard(Mutex& m): m_{m} {
+        explicit  LockGuard(Mutex& m) noexcept: m_{m} {
             m_.lock();
         }
 
-        ~LockGuard(Mutex& m) {
+        ~LockGuard(Mutex& m) noexcept {
             m_.unlock( )
         }
 

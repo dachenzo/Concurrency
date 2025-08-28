@@ -9,11 +9,11 @@ namespace Cx {
 
         SpinMutex& operator=(SpinMutex& othrt) = delete;
 
-        void lock();
+        void lock() noexcept;
 
-        bool try_lock();
+        bool try_lock() noexcept;
 
-        void unlock();
+        void unlock() noexcept;
 
         private:
         std::atomic_flag flag_;
