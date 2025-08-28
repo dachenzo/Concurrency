@@ -1,2 +1,0 @@
-/usr/bin/ar qc libcx.a CMakeFiles/cx.dir/spin_mutex.cpp.o
-/usr/bin/ranlib libcx.a
