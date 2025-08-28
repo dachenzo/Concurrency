@@ -17,8 +17,8 @@ namespace Cx {
             m_.lock();
         }
 
-        ~LockGuard(Mutex& m) noexcept {
-            m_.unlock( )
+        ~LockGuard() noexcept {
+            m_.unlock();
         }
 
         private:
