@@ -10,7 +10,7 @@ int main() {
     std::atomic<int> x{0};
 
     auto work = [&]{
-        for (int i = 0; i < 1000000000; ++i) {
+        for (int i = 0; i < 1000000; ++i) {
             Cx::LockGuard<Cx::SpinMutex> g{m};
             x.fetch_add(1, std::memory_order_relaxed);
         }
