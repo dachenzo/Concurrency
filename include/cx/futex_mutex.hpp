@@ -18,7 +18,7 @@ namespace Cx {
 
         void unlock() {
             state_.store(0, std::memory_order_release);
-            syscall(SYS_futex, (int*)&state_, FUTEX_WAKE, 1, NULL, NULL, 0);
+            syscall(SYS_futex, reinterpret_cast<int*>(&state_), FUTEX_WAKE, 1, NULL, NULL, 0);
         }
 
         void slow_lock() {
@@ -27,7 +27,7 @@ namespace Cx {
                 if (state_.compare_exchange_strong(expected, 1, std::memory_order_acquire)) {
                     return;
                 }
-                syscall(SYS_futex, (int*)&state_, FUTEX_WAIT, 1, NULL, NULL, 0);
+                syscall(SYS_futex, reinterpret_cast<int*>(&state_), FUTEX_WAIT, 1, NULL, NULL, 0);
             }
         }
 

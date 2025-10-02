@@ -16,9 +16,9 @@ namespace Cx {
             
             while (flag_.test(std::memory_order_relaxed)) {
                 // polite spin: PAUSE/backoff
-                std::size_t wait = 64;
+                std::size_t wait = 32;
                 for (std::size_t i = 0; i < wait; ++i) cpu_relax();
-                wait *= 2;
+                wait = std::min<std::size_t>(1<<15, wait);
                 
             }
          
