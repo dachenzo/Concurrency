@@ -1,17 +1,18 @@
 #include <cx/lock_guard.hpp>
 #include <cx/spin_mutex.hpp>
+#include <cx/futex_mutex.hpp>
 #include <atomic>
 #include <thread>
 #include <vector>
 #include <iostream>
 
 int main() {
-    Cx::SpinMutex m;                 
+    Cx::FutexMutex m;                
     std::atomic<int> x{0};
 
     auto work = [&]{
         for (int i = 0; i < 1000000; ++i) {
-            Cx::LockGuard<Cx::SpinMutex> g{m};
+            Cx::LockGuard<Cx::FutexMutex> g{m};
             x.fetch_add(1, std::memory_order_relaxed);
         }
     };

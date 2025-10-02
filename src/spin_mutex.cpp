@@ -1,11 +1,6 @@
 #include <cx/spin_mutex.hpp>
-#if defined(__x86_64__) || defined(_M_X64)
-  #include <immintrin.h>
-  inline void cpu_relax() { _mm_pause(); }
-#else
-  #include <thread>
-  inline void cpu_relax() { std::this_thread::yield(); }
-#endif
+#include <cx/detail.hpp>
+#include <algorithm>
 
 namespace Cx {
     SpinMutex::SpinMutex(): flag_{} {
@@ -21,7 +16,10 @@ namespace Cx {
             
             while (flag_.test(std::memory_order_relaxed)) {
                 // polite spin: PAUSE/backoff
-                for (int i = 0; i < 64; ++i) cpu_relax();
+                std::size_t wait = 64;
+                for (std::size_t i = 0; i < wait; ++i) cpu_relax();
+                wait *= 2;
+                
             }
          
         }
