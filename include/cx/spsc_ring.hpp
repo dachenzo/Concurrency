@@ -3,7 +3,7 @@
 #include <array>
 #include <atomic>
 #include <optional>
-
+#include <iostream> 
 
 
 namespace Cx {
@@ -71,6 +71,8 @@ namespace Cx {
             return std::move(value);
 
         }
+
+        std::size_t capacity() const noexcept {return cap_;}
 
         
         private:
